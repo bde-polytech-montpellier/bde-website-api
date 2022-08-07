@@ -3,10 +3,9 @@
   "private": true,
   "version": "1.0.0",
   "scripts": {
-    "start": "node ./index.ts",
-    "dev": "nodemon ./index.ts localhost 3080"
+    "start": "node --loader ts-node/esm ./index.ts",
+    "dev": "node --loader ts-node/esm ./index.ts localhost 3080"
   },
-  "type": "module",
   "dependencies": {
     "axios": "^0.27.2",
     "bcryptjs": "^2.4.3",

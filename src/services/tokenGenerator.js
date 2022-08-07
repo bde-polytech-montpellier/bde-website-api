@@ -18,4 +18,4 @@ router.route("/").get((req, res) => {
   res.status(200).send(token)
 })
 
-module.exports = router;;;
+export default router;;;

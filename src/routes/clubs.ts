@@ -4,7 +4,7 @@ import formidable, { File } from "formidable";
 import uploadImage from "../services/uploadImg";
 import express, { Request, Response } from "express";
 import { validateAdmin } from "../middlewares/validateToken";
-import {v4 as uuidv4} from "uuid"
+import { v4 as uuidv4 } from "uuid";
 
 const router = express.Router();
 const form = formidable({ multiples: true });
@@ -22,7 +22,7 @@ router
       form.parse(req, (err, fields, files) => {
         if (err)
           return res.status(500).json({ message: "Could not parse data" });
-        registerClub(fields, files.pic as File, res);
+        return registerClub(fields, files.pic as File, res);
       });
     });
   });
@@ -40,7 +40,7 @@ router
       form.parse(req, (err, fields, files) => {
         if (err)
           return res.status(500).json({ message: "Could not parse data" });
-        updateClub(req.params.id, fields, files.pic as File, res);
+        return updateClub(req.params.id, fields, files.pic as File, res);
       });
     });
   });
@@ -75,7 +75,7 @@ function registerClub(
     }
     if (err)
       return res.status(500).json({ message: "Could not register club" });
-    else res.status(200).json({ message: "Club added" });
+    else return res.status(200).json({ message: "Club added" });
   });
 }
 
@@ -88,7 +88,8 @@ async function updateClub(
   if (file && (fields.imgChanged as string) === "true") {
     await uploadImage(file.filepath, res, (url: any) => {
       pool.query(queries.setImg(url.secure_url, club), (err) => {
-        if (err) return res.status(500).json({ message: "Could not upload image" });
+        if (err)
+          return res.status(500).json({ message: "Could not upload image" });
       });
     });
   }
@@ -101,8 +102,8 @@ async function updateClub(
     fields.ig ? (fields.ig as string) : undefined
   );
   pool.query(query, (err) => {
-    if (err) res.status(500).json({ message: "Could not update club" });
-    else res.status(200).json({ message: "Club updated" });
+    if (err) return res.status(500).json({ message: "Could not update club" });
+    else return res.status(200).json({ message: "Club updated" });
   });
 }
-module.exports = router;
+export default router;

@@ -14,7 +14,7 @@ router
   .route("/")
   .get((req, res) => {
     pool.query(queries.listEveryPartners(), (err, results) => {
-      if (err) res.status(500).send(err);
+      if (err) res.status(500).json({ message: "Could not list partners" });
       else res.status(200).json(results.rows);
     });
   })
@@ -24,7 +24,7 @@ router
         checkMail(fields.mail as string, res, () => {
           if (err)
             return res.status(500).json({ message: "Could not parse data" });
-          registerPartner(fields, files.pic as File, res);
+          return registerPartner(fields, files.pic as File, res);
         });
       });
     });
@@ -34,8 +34,8 @@ router
   .route("/:id")
   .get((req, res) => {
     pool.query(queries.getPartner(req.params.id), (err, results) => {
-      if (err) res.status(500).send(err);
-      else res.status(200).json(results.rows);
+      if (err) return res.status(500).json({ message: "Could not get partner" });
+      else return res.status(200).json(results.rows);
     });
   })
   .put((req, res) => {
@@ -44,15 +44,13 @@ router
         checkMail(fields.mail as string, res, () => {
           if (err)
             return res.status(500).json({ message: "Could not parse data" });
-          updatePartner(req.params.id, fields, files.pic as File, res);
+          return updatePartner(req.params.id, fields, files.pic as File, res);
         });
       });
     });
   })
   .delete((req, res) => {
-    validateAdmin(req.headers.authorization!, res, () => {
-      deletePartner(req, res);
-    });
+    validateAdmin(req.headers.authorization!, res, () => deletePartner(req, res));
   });
 
 router.route("/name/:name").get((req, res) => {
@@ -122,17 +120,17 @@ async function updatePartner(
     fields.website ? (fields.website as string) : undefined
   );
   pool.query(query, (err) => {
-    if (err) res.status(500).json({ message: "Could not update partner" });
-    else res.status(200).json({ message: "Partner updated" });
+    if (err) return res.status(500).json({ message: "Could not update partner" });
+    else return res.status(200).json({ message: "Partner updated" });
   });
 }
 
 function deletePartner(req: Request, res: Response) {
   const query = queries.deletePartner(req.params.id);
   pool.query(query, (err) => {
-    if (err) res.status(500).json({ message: "Could not delete partner" });
-    else res.status(200).json({ message: "Partner deleted" });
+    if (err) return res.status(500).json({ message: "Could not delete partner" });
+    else return res.status(200).json({ message: "Partner deleted" });
   });
 }
 
-module.exports = router;
+export default router;

@@ -1,3 +1,4 @@
+import pg from "pg"
 require("dotenv").config();
 
 /**
@@ -20,10 +21,8 @@ const port = regex_port[Symbol.match](database)![0].slice(1, -1);
 const regex_db_name = /[\d\w]+$/;
 const db_name = regex_db_name[Symbol.match](database)![0];
 
-import pg from "pg"
-const Pool = pg.Pool;
 
-export const pool = new Pool({
+export const pool = new pg.Pool({
     user: user,
     password: passwd,
     host: host,

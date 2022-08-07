@@ -1,16 +1,17 @@
 import express, { Request, Response } from "express";
+import clubs from "./clubs";
+import events from "./events";
+import roles from "./roles";
+import partners from "./partners";
+import polyusers from "./polyusers";
+import promos from "./promos";
+import tokenGen from "../services/tokenGenerator";
+import signup from "./signup";
+import signin from "./signin";
+
 const router = express.Router();
 // const middlewares = require("../middleware/user");
 
-const clubs = require("./clubs");
-const events = require("./events");
-const roles = require("./roles.ts");
-const partners = require("./partners");
-const polyusers = require("./polyusers");
-const promos = require("./promos");
-const tokenGen = require("../services/tokenGenerator");
-const signup = require("./signup");
-const signin = require("./signin");
 
 router.get("/", (req, res) => res.status(200).send("New bde website"));
 router.use("/clubs", clubs);

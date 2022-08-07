@@ -4,7 +4,7 @@ import queries from "../queries/eventQueries";
 import uploadImage from "../services/uploadImg";
 import express, { Request, Response } from "express";
 import { validateAdmin } from "../middlewares/validateToken";
-import {v4 as uuidv4} from "uuid"
+import { v4 as uuidv4 } from "uuid";
 
 const router = express.Router();
 const form = formidable({ multiples: true });
@@ -13,7 +13,7 @@ router
   .route("/")
   .get((req, res) => {
     pool.query(queries.listEveryEvents(), (err, results) => {
-      if (err) res.status(500).send(err);
+      if (err) res.status(500).json({ message: "Could not list events" });
       else res.status(200).json(results.rows);
     });
   })
@@ -22,7 +22,7 @@ router
       form.parse(req, (err, fields, files) => {
         if (err)
           return res.status(500).json({ message: "Could not parse data" });
-        registerEvent(fields, files.pic as File, res);
+        return registerEvent(fields, files.pic as File, res);
       });
     });
   });
@@ -31,7 +31,7 @@ router
   .route("/:id")
   .get((req, res) => {
     pool.query(queries.getEvent(req.params.id), (err, results) => {
-      if (err) res.status(500).send(err);
+      if (err) res.status(500).json({ message: "Could not get event" });
       else res.status(200).json(results.rows);
     });
   })
@@ -40,14 +40,12 @@ router
       form.parse(req, (err, fields, files) => {
         if (err)
           return res.status(500).json({ message: "Could not parse data" });
-        updateEvent(req.params.id, fields, files.pic as File, res);
+        return updateEvent(req.params.id, fields, files.pic as File, res);
       });
     });
   })
   .delete((req, res) => {
-    validateAdmin(req.headers.authorization!, res, () => {
-      deleteEvent(req, res);
-    });
+    validateAdmin(req.headers.authorization!, res, () => deleteEvent(req, res));
   });
 
 router.route("/name/:name").get((req, res) => {
@@ -105,7 +103,8 @@ async function updateEvent(
   if (file && (fields.imgChanged as string) === "true") {
     await uploadImage(file.filepath, res, (url: any) => {
       pool.query(queries.setImg(url.secure_url, event), (err) => {
-        if (err) return res.status(500).json({ message: "Could not upload image" });
+        if (err)
+          return res.status(500).json({ message: "Could not upload image" });
       });
     });
   }
@@ -132,8 +131,8 @@ async function updateEvent(
 function deleteEvent(req: Request, res: Response) {
   const query = queries.deleteEvent(req.params.id);
   pool.query(query, (err) => {
-    if (err) res.status(500).send(err);
-    else res.status(200).json({ message: "Event deleted" });
+    if (err) return res.status(500).send(err);
+    else return res.status(200).json({ message: "Event deleted" });
   });
 }
-module.exports = router;
+export default router;

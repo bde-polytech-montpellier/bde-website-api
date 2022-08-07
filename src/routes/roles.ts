@@ -6,9 +6,9 @@ const router = express.Router();
 
 router.route("/").get((req, res) => {
   pool.query(queries.listEveryRole(), (err, results) => {
-    if (err) res.status(500).send(err);
-    else res.status(200).json(results.rows);
+    if (err) return res.status(500).json({ message: "Could not list roles" });
+    else return res.status(200).json(results.rows);
   });
 });
 
-module.exports = router;
+export default router;

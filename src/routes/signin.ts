@@ -75,4 +75,4 @@ const signJWT = (req: Request, user: any, res: Response) => {
   });
 };
 
-module.exports = router;
+export default router;

@@ -42,4 +42,4 @@ const addUser = (req: Request, res: Response, hash: string) => {
   });
 };
 
-module.exports = router;
+export default router;
