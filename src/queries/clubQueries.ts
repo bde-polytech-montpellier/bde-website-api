@@ -20,9 +20,9 @@ const addClub = (
     id,
     name,
     short_desc,
-    desc,
-    fb,
-    ig
+    desc ? desc : null,
+    fb ? fb : null,
+    ig ? ig : null,
   );
 
 const updateClub = (
@@ -37,9 +37,9 @@ const updateClub = (
     `UPDATE club SET club_name=%L, club_short_description=%L, club_description=%L, club_fb=%L, club_ig=%L WHERE club_id=%L`,
     name,
     short_desc,
-    desc,
-    fb,
-    ig,
+    desc ? desc : null,
+    fb ? fb : null,
+    ig ? ig : null,
     club
   );
 

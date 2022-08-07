@@ -41,15 +41,16 @@ const addEvent = (
     id,
     name,
     short_desc,
-    desc,
-    date,
-    time,
-    place,
-    datetime,
-    price,
-    club
+    desc ? desc : null,
+    date ? date : null,
+    time ? time : null,
+    place ? place : null,
+    datetime ? datetime : null,
+    price ? price : null,
+    club ? club : null
   );
 
+const timeRegex = /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/;
 const updateEvent = (
   event: string,
   name: string,
@@ -60,23 +61,24 @@ const updateEvent = (
   place?: string,
   datetime?: string,
   price?: number,
-  club?: string,
+  club?: string
 ) =>
   format(
     `UPDATE event SET event_name=%L, event_short_description=%L, event_description=%L, event_date=%L, event_time=%L, event_place=%L, event_datetime=%L, event_price=%L, event_club_id=%L WHERE event_id=%L`,
     name,
     short_desc,
-    desc,
-    date,
-    time,
-    place,
-    datetime,
-    price,
-    club,
+    desc ? desc : null,
+    date && isNaN(date!.getTime()) ? null : date,
+    time && timeRegex.test(time) ? time : null,
+    place ? place : null,
+    datetime ? datetime : null,
+    price ? price : null,
+    club ? club : null,
     event
   );
 
-const setImg = (img: string, id: string) => format(`UPDATE event SET event_pic=%L WHERE event_id=%L`, img, id);
+const setImg = (img: string, id: string) =>
+  format(`UPDATE event SET event_pic=%L WHERE event_id=%L`, img, id);
 
 const deleteEvent = (id: string) =>
   format(`DELETE FROM event WHERE event_id=%L`, id);
