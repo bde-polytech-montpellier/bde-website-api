@@ -1,8 +1,9 @@
 {
   "compilerOptions": {
     "resolveJsonModule": true,
+    "types": ["node"],
     "incremental": true,
-    "target": "es2019" ,
+    "target": "es6" ,
     "module": "commonjs",
     "allowJs": true ,
     "outDir": "./build",
@@ -23,5 +24,11 @@
     "emitDecoratorMetadata": true ,
     "forceConsistentCasingInFileNames": true,
     "useUnknownInCatchVariables": false
-  }
+  },
+  "include": [
+    "./**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }
