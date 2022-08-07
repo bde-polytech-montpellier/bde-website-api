@@ -1,13 +1,14 @@
 import { pool } from "../db";
 import { Request, Response } from "express";
 
+import express from "express";
 import bcrypt from "bcryptjs";
 import {v4 as uuidv4} from "uuid"
 
 import queries from "../queries/authenticationQueries";
 import { validatePasswd } from "../middlewares/users";
 
-const router = require("express").Router();
+const router = express.Router();
 
 router.post("/", validatePasswd, (req: Request, res: Response) => {
   registerUser(req, res);

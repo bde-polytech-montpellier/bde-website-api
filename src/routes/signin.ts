@@ -1,11 +1,12 @@
 import { pool } from "../db";
 import { Request, Response } from "express";
 
+import express from "express";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import queries from "../queries/authenticationQueries";
 
-const router = require("express").Router();
+const router = express.Router();
 const TOKEN_LIFETIME = "7d";
 
 router.post("/", (req: Request, res: Response) => {

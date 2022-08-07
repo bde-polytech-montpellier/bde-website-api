@@ -1,9 +1,8 @@
 import { Response } from "express";
 import { pool } from "../db";
 import userQueries from "../queries/authenticationQueries";
-
-require("dotenv").config();
-
+import dotenv from "dotenv"
+dotenv.config()
 import jwt from "jsonwebtoken";
 
 const tokenKey = process.env.JWT_SECRET!;

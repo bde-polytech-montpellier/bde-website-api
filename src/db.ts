@@ -1,5 +1,6 @@
 import pg from "pg"
-require("dotenv").config();
+import dotenv from "dotenv"
+dotenv.config()
 
 /**
  * Extracting the login information from the environnement variable and creating a connection to the Postgres DB
