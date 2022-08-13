@@ -16,10 +16,10 @@ const maskEmail = (email = "") => {
     name.slice(0, 2) +
     name.slice(2, len - 2).replace(/./g, "*") +
     name.slice(len - 2, len);
-  const firstIndexOfDot = domain.indexOf(".");
+  const lastIndexOfDot = domain.lastIndexOf(".");
   const maskedDomain =
-    domain.slice(0, firstIndexOfDot).replace(/./g, "*") +
-    domain.slice(firstIndexOfDot);
+    domain.slice(0, lastIndexOfDot).replace(/./g, "*") +
+    domain.slice(lastIndexOfDot);
   const maskedEmail = maskedName + "@" + maskedDomain;
   return maskedEmail;
 };
