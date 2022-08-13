@@ -18,7 +18,7 @@ router
     });
   })
   .post((req, res) => {
-    validateAdmin(req.headers.authorization!, res, () => {
+    validateAdmin(req.headers.authorization, res, () => {
       form.parse(req, (err, fields, files) => {
         if (err)
           return res.status(500).json({ message: "Could not parse data" });
@@ -36,7 +36,7 @@ router
     });
   })
   .put((req, res) => {
-    validateAdmin(req.headers.authorization!, res, () => {
+    validateAdmin(req.headers.authorization, res, () => {
       form.parse(req, (err, fields, files) => {
         if (err)
           return res.status(500).json({ message: "Could not parse data" });

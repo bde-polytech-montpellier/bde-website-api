@@ -19,7 +19,7 @@ router
     });
   })
   .post((req, res) => {
-    validateAdmin(req.headers.authorization!, res, async () => {
+    validateAdmin(req.headers.authorization, res, async () => {
       form.parse(req, (err, fields, files) => {
         checkMail(fields.mail as string, res, () => {
           if (err)
@@ -39,7 +39,7 @@ router
     });
   })
   .put((req, res) => {
-    validateAdmin(req.headers.authorization!, res, () => {
+    validateAdmin(req.headers.authorization, res, () => {
       form.parse(req, (err, fields, files) => {
         checkMail(fields.mail as string, res, () => {
           if (err)
@@ -50,7 +50,7 @@ router
     });
   })
   .delete((req, res) => {
-    validateAdmin(req.headers.authorization!, res, () => deletePartner(req, res));
+    validateAdmin(req.headers.authorization, res, () => deletePartner(req, res));
   });
 
 router.route("/name/:name").get((req, res) => {

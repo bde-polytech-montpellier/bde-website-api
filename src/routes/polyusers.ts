@@ -9,16 +9,40 @@ import bcrypt from "bcryptjs";
 import { validatePasswd } from "../middlewares/users";
 
 const router = express.Router();
+const maskEmail = (email = "") => {
+  const [name, domain] = email.split("@");
+  const { length: len } = name;
+  const maskedName =
+    name.slice(0, 2) +
+    name.slice(2, len - 2).replace(/./g, "*") +
+    name.slice(len - 2, len);
+  const firstIndexOfDot = domain.indexOf(".");
+  const maskedDomain =
+    domain.slice(0, firstIndexOfDot).replace(/./g, "*") +
+    domain.slice(firstIndexOfDot);
+  const maskedEmail = maskedName + "@" + maskedDomain;
+  return maskedEmail;
+};
 
 router.route("/").get((req, res) => {
-  pool.query(queries.listEveryUsers(), (err, results) => {
-    if (err) return res.status(500).json({ message: "Could not list users" });
-    else return res.status(200).json(results.rows);
+  validateAdmin(req.headers.authorization, res, () => {
+    pool.query(queries.listEveryUsers(), (err, results) => {
+      if (err) return res.status(500).json({ message: "Could not list users" });
+      else
+        return res
+          .status(200)
+          .json(
+            results.rows.map((user) => ({
+              ...user,
+              polyuser_mail: maskEmail(user.polyuser_mail),
+            }))
+          );
+    });
   });
 });
 
 router.route("/permissions").patch((req, res) => {
-  validateAdmin(req.headers.authorization!, res, () =>
+  validateAdmin(req.headers.authorization, res, () =>
     updatePermissions(req, res)
   );
 });
@@ -28,22 +52,30 @@ router
   .get((req, res) => {
     pool.query(queries.getUser(req.params.id), (err, results) => {
       if (err) return res.status(500).send(err);
-      else return res.status(200).json(results.rows);
+      else
+        return res
+          .status(200)
+          .json(
+            results.rows.map((user) => ({
+              ...user,
+              polyuser_mail: maskEmail(user.polyuser_mail),
+            }))
+          );
     });
   })
   .put((req, res) => {
-    validatePermissions(req.headers.authorization!, req.params.id, res, () =>
+    validatePermissions(req.headers.authorization, req.params.id, res, () =>
       updateUser(req, res)
     );
   })
   .delete((req, res) => {
-    validatePermissions(req.headers.authorization!, req.params.id, res, () =>
+    validatePermissions(req.headers.authorization, req.params.id, res, () =>
       queries.deleteUser(req.body.id)
     );
   });
 
 router.route("/:id/role/:role").patch((req, res) => {
-  validateAdmin(req.headers.authorization!, res, () =>
+  validateAdmin(req.headers.authorization, res, () =>
     updatePermissions(req, res)
   );
 });
@@ -51,7 +83,15 @@ router.route("/:id/role/:role").patch((req, res) => {
 router.route("/name/:name").get((req, res) => {
   pool.query(queries.getUsersFromName(req.params.name), (err, results) => {
     if (err) return res.status(500).send(err);
-    else return res.status(200).json(results.rows);
+    else
+      return res
+        .status(200)
+        .json(
+          results.rows.map((user) => ({
+            ...user,
+            polyuser_mail: maskEmail(user.polyuser_mail),
+          }))
+        );
   });
 });
 

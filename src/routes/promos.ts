@@ -14,7 +14,7 @@ router
     });
   })
   .post((req, res) => {
-    validateAdmin(req.headers.authorization!, res, () =>
+    validateAdmin(req.headers.authorization, res, () =>
       registerPromo(req, res)
     );
   });
@@ -28,10 +28,10 @@ router
     });
   })
   .put((req, res) => {
-    validateAdmin(req.headers.authorization!, res, () => updatePromo(req, res));
+    validateAdmin(req.headers.authorization, res, () => updatePromo(req, res));
   })
   .delete((req, res) => {
-    validateAdmin(req.headers.authorization!, res, () => deletePromo(req, res));
+    validateAdmin(req.headers.authorization, res, () => deletePromo(req, res));
   });
 
 router.route("/name/:name").get((req, res) => {
