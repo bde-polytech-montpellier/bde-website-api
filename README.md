@@ -1,6 +1,16 @@
 # API bde website
 The front part is [here](https://github.com/iusildra/bde-website-front)
 
+## Technical stack
+- [NodeJs](https://nodejs.org/en/)
+- [ExpressJs](https://expressjs.com/)
+- [Typescript](https://www.typescriptlang.org/)
+- [Cloudinary API](https://cloudinary.com/)
+- [PostgreSQL](https://www.postgresql.org/)
+  
+## Deployment
+This app is deployed on Dokku on Polytech's server. This app has been created by Lucas Nouguier and for now he's the only one to be able to push on it and access the database. You can contact him via [email](mailto:lucas.nouguier@etu.umontpellier.fr) if you need anything
+
 ## Database architecture
 ![database entities](doc/db.png)
 ## API architecture
