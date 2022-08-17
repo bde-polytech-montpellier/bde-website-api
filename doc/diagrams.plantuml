@@ -1,0 +1,87 @@
+@startuml db
+class Polyuser {
+  + polyuser_id: UUID
+  + polyuser_name: String
+  + polyuser_email: String
+  - polyuser_password: Sring
+  + polyuser_lastlogin: Date
+}
+
+class Event {
+  + event_id: UUID
+  + event_name: String
+  + event_short_description: String
+  + event_description: String
+  + event_pic: String
+  + event_date: Date
+  + event_time: Time
+  + event_place: String
+  + event_datetime: String
+  + event_price: Float
+  + event_club: UUID
+}
+
+class Partnenaire {
+  + partenaire_id: UUID
+  + partenaire_name: String
+  + partenaire_short_description: String
+  + partenaire_description: String
+  + partenaire_pic: String
+  + partenaire_mail: String
+  + partenaire_website_url: String
+}
+
+class Club {
+  + club_id: UUID
+  + club_name: String
+  + club_short_description: String
+  + club_description: String
+  + club_pic: String
+  + club_fb: String
+  + club_ig: String
+}
+@enduml
+
+@startuml Router
+package Routes {
+  [Users] as User
+  [Events] as Event
+  [Partnerships] as Partner
+  [Clubs] as Club
+  [Promos] as Promo
+  [Roles] as Role
+  [Signin] as Signin
+  [Signup] as Signup
+}
+
+(DB Connection) as Connection
+
+database Database
+
+Routes --> Connection: send queries
+Connection -> Database: transmit queries
+
+Database ..> Connection: receive results
+Connection .> Routes: transmit results
+@enduml
+
+@startuml protectedResources
+[Routes]
+
+package Middlewares {
+  [Token validation] as Token
+  [Email validation] as Email
+  [Password validation] as Password
+}
+
+(DB Connection) as Connection
+
+database Database
+
+Routes -d-> Middlewares: send queries
+Middlewares .u.> Routes: on failure:\nsend error
+Middlewares -u-> Connection: on success:\ntransmit queries
+Connection -r-> Database: execute queries
+Database .l.> Connection: send results
+Connection .l.> Routes: transmit results
+@enduml
