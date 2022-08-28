@@ -22,7 +22,7 @@ INSERT INTO ROLE (role_name)
 
 CREATE TABLE polyuser (
   polyuser_id uuid PRIMARY KEY,
-  polyuser_name varchar(255) UNIQUE NOT NULL,
+  polyuser_name varchar(255) NOT NULL,
   polyuser_role int NOT NULL REFERENCES ROLE (role_id) DEFAULT 2,
   polyuser_mail varchar(255) UNIQUE NOT NULL,
   polyuser_password text NOT NULL,

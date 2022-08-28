@@ -18,8 +18,8 @@ const connectUser = (req: Request, res: Response) => {
     if (err) res.status(500).send(err);
     else {
       if (results.rowCount == 0)
-        return res.status(404).send({
-          msg: "Le mail ou mot de passe est incorrect !",
+        return res.status(404).json({
+          message: "Le mail ou mot de passe est incorrect !",
         });
 
       comparePasswd(req, results.rows[0], res);
@@ -72,7 +72,7 @@ const signJWT = (req: Request, user: any, res: Response) => {
     else
       return res
         .status(200)
-        .send({ msg: "Connection réussie !", token, userPayload });
+        .send({ message: "Connection réussie !", token, userPayload });
   });
 };
 

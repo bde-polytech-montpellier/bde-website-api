@@ -19,8 +19,8 @@ const registerUser = (req: Request, res: Response) => {
     if (err) res.status(500).send(err);
     else {
       if (results.rowCount !== 0)
-        return res.status(409).send({
-          msg: "Cette adresse mail est déjà utilisée !",
+        return res.status(409).json({
+          message: "Cette adresse mail est déjà utilisée !",
         });
 
       hashPasswd(req, res);
@@ -39,7 +39,7 @@ const addUser = (req: Request, res: Response, hash: string) => {
   const { name, mail } = req.body;
   pool.query(queries.createUser(uuidv4(), name, mail, hash), (err, results) => {
     if (err) return res.status(500).send(err);
-    else return res.status(200).send({ msg: "Utilisateur créé avec succès !" });
+    else return res.status(200).json({ message: "Utilisateur créé avec succès !" });
   });
 };
 
