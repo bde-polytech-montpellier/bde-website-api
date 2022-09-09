@@ -2,7 +2,7 @@ import format from "pg-format";
 import { ChangedPermission } from "../interfaces/users";
 
 const listEveryUsers = () =>
-  `SELECT polyuser_id, polyuser_name, polyuser_mail, role_id, role_name FROM polyuser INNER JOIN role ON polyuser_role=role_id`;
+  `SELECT polyuser_id, polyuser_name, polyuser_mail, role_id, role_name FROM polyuser INNER JOIN role ON polyuser_role=role_id ORDER BY polyuser_name`;
 
 const getUser = (id: string) =>
   format(

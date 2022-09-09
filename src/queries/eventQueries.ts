@@ -1,7 +1,7 @@
 import format from "pg-format";
 
 const listEveryEvents = () =>
-  `SELECT event_id, event_name, event_short_description, event_description, event_pic, event_date, event_time, event_place, event_datetime, event_price, event_club_id, club_name FROM event LEFT JOIN club ON event_club_id = club_id`;
+  `SELECT event_id, event_name, event_short_description, event_description, event_pic, event_date, event_time, event_place, event_datetime, event_price, event_club_id, club_name FROM event LEFT JOIN club ON event_club_id = club_id ORDER BY event_name`;
 const listEveryEventsAfter = (date: Date) =>
   format(
     `SELECT event_id, event_name, event_short_description, event_description, event_date, event_time, event_place, event_datetime, event_price, event_club_id, club_name FROM event LEFT JOIN club ON event_club_id = club_id WHERE event_date > %L`,

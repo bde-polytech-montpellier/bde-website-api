@@ -1,4 +1,4 @@
-const listEveryRole = () => "SELECT * FROM role";
+const listEveryRole = () => "SELECT * FROM role ORDER BY role_name";
 
 export default {
   listEveryRole,

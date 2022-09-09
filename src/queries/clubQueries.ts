@@ -1,6 +1,6 @@
 import format from "pg-format";
 
-const listEveryClub = () => `SELECT * FROM club`;
+const listEveryClub = () => `SELECT * FROM club ORDER BY club_name`;
 
 const getClub = (id: string) =>
   format(`SELECT * FROM club WHERE club_id=%L`, id);

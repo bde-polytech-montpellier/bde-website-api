@@ -1,6 +1,6 @@
 import format from "pg-format";
 
-const listEveryPartners = () => `SELECT* FROM partenaire`;
+const listEveryPartners = () => `SELECT* FROM partenaire ORDER BY partenaire_name`;
 
 const getPartner = (id: string) =>
   format(`SELECT * FROM partenaire WHERE partenaire_id=%L`, id);
