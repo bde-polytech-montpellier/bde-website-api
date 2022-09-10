@@ -1,5 +1,6 @@
 # API bde website
 The front part is [here](https://github.com/iusildra/bde-website-front)
+The backlog and project state is [here](https://miro.com/welcomeonboard/QlBGdUM0UVhVd2FVUm9TYXBrZHFhb1FwNzdIcnBVeHJCa0FUVmpQMTYyN0phQ1FRWXl4Sm1BMUprWlVLNTZwOHwzNDU4NzY0NTI5NDA2MzU1NDQ4?share_link_id=723413879718)
 
 ## Technical stack
 - [NodeJs](https://nodejs.org/en/)
