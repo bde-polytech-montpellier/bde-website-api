@@ -77,7 +77,6 @@ function registerPartner(
   pool.query(query, async (err, result) => {
     if (file && (fields.imgChanged as string) === "true") {
       await uploadImage(file.filepath, res, (url: any) => {
-        console.log(result.rows[0], url.secure_url);
         pool.query(
           queries.setImg(url.secure_url, result.rows[0].partenaire_id),
           (err) => {
@@ -101,7 +100,6 @@ async function updatePartner(
   file: formidable.File,
   res: Response
 ) {
-  console.log(file, fields.imgChanged);
   if (file && (fields.imgChanged as string) === "true") {
     await uploadImage(file.filepath, res, (url: any) => {
       pool.query(queries.setImg(url.secure_url, partner), (err) => {
