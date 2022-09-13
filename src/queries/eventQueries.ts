@@ -41,13 +41,13 @@ const addEvent = (
     id,
     name,
     short_desc,
-    desc ? desc : null,
-    date ? date : null,
-    time ? time : null,
-    place ? place : null,
-    datetime ? datetime : null,
-    price ? price : null,
-    club ? club : null
+    desc != undefined ? desc : null,
+    date != undefined ? date : null,
+    time != undefined ? time : null,
+    place != undefined ? place : null,
+    datetime != undefined ? datetime : null,
+    price != undefined ? price : null,
+    club != undefined ? club : null
   );
 
 const timeRegex = /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/;
@@ -67,13 +67,13 @@ const updateEvent = (
     `UPDATE event SET event_name=%L, event_short_description=%L, event_description=%L, event_date=%L, event_time=%L, event_place=%L, event_datetime=%L, event_price=%L, event_club_id=%L WHERE event_id=%L`,
     name,
     short_desc,
-    desc ? desc : null,
+    desc != undefined ? desc : null,
     date && isNaN(date!.getTime()) ? null : date,
     time && timeRegex.test(time) ? time : null,
-    place ? place : null,
-    datetime ? datetime : null,
-    price ? price : null,
-    club ? club : null,
+    place != undefined ? place : null,
+    datetime != undefined ? datetime : null,
+    price != undefined ? price : null,
+    club != undefined ? club : null,
     event
   );
 

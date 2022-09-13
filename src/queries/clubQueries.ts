@@ -20,9 +20,9 @@ const addClub = (
     id,
     name,
     short_desc,
-    desc ? desc : null,
-    fb ? fb : null,
-    ig ? ig : null,
+    desc != undefined ? desc : null,
+    fb != undefined ? fb : null,
+    ig != undefined ? ig : null
   );
 
 const updateClub = (
@@ -37,13 +37,14 @@ const updateClub = (
     `UPDATE club SET club_name=%L, club_short_description=%L, club_description=%L, club_fb=%L, club_ig=%L WHERE club_id=%L`,
     name,
     short_desc,
-    desc ? desc : null,
-    fb ? fb : null,
-    ig ? ig : null,
+    desc != undefined ? desc : null,
+    fb != undefined ? fb : null,
+    ig != undefined ? ig : null,
     club
   );
 
-const setImg = (img: string, id: string) => format(`UPDATE club SET club_pic=%L WHERE club_id=%L`, img, id);
+const setImg = (img: string, id: string) =>
+  format(`UPDATE club SET club_pic=%L WHERE club_id=%L`, img, id);
 
 export default {
   listEveryClub,
@@ -51,5 +52,5 @@ export default {
   getClubsFromName,
   addClub,
   updateClub,
-  setImg
+  setImg,
 };

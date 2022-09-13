@@ -1,6 +1,6 @@
-import pg from "pg"
-import dotenv from "dotenv"
-dotenv.config()
+import pg from "pg";
+import dotenv from "dotenv";
+dotenv.config();
 
 /**
  * Extracting the login information from the environnement variable and creating a connection to the Postgres DB
@@ -22,59 +22,57 @@ const port = regex_port[Symbol.match](database)![0].slice(1, -1);
 const regex_db_name = /[\d\w]+$/;
 const db_name = regex_db_name[Symbol.match](database)![0];
 
-
 export const pool = new pg.Pool({
-    user: user,
-    password: passwd,
-    host: host,
-    database: db_name,
-    port: Number(port),
+  user: user,
+  password: passwd,
+  host: host,
+  database: db_name,
+  port: Number(port),
 });
 
 export interface User {
-    id?: string
-    name?: string
-    role?: number
-    mail?: string
-    passwd?: string
-    lastlogin?: Date
+  id?: string;
+  name?: string;
+  role?: number;
+  mail?: string;
+  passwd?: string;
+  lastlogin?: Date;
 }
 
 export interface Partner {
-    id?: string
-    name?: string
-    pic?: string
-    short_desc?: string
-    desc?: string
-    mail?: string
-    website?: string
+  id?: string;
+  name?: string;
+  pic?: string;
+  short_desc?: string;
+  desc?: string;
+  mail?: string;
+  website?: string;
 }
 
 export interface Club {
-    id?: string
-    name?: string
-    pic?: string
-    short_desc?: string
-    desc?: string
-    fb?: string
-    ig?: string
+  id?: string;
+  name?: string;
+  pic?: string;
+  short_desc?: string;
+  desc?: string;
+  fb?: string;
+  ig?: string;
 }
 
 export interface Event {
-    id?: string
-    name?: string
-    short_desc?: string
-    pic?: string
-    desc?: string
-    date?: Date
-    time?: string
-    place?: string
-    datetime?: string
-    price: number
-    club?: string
+  id?: string;
+  name?: string;
+  short_desc?: string;
+  pic?: string;
+  desc?: string;
+  date?: Date;
+  time?: string;
+  place?: string;
+  datetime?: string;
+  price: number;
+  club?: string;
 }
 
 export interface Prevention {
-    text: string
+  text: string;
 }
-

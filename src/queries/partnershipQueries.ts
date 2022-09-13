@@ -1,12 +1,14 @@
 import format from "pg-format";
 
-const listEveryPartners = () => `SELECT* FROM partenaire ORDER BY partenaire_name`;
+const listEveryPartners = () =>
+  `SELECT* FROM partenaire ORDER BY partenaire_name`;
 
 const getPartner = (id: string) =>
   format(`SELECT * FROM partenaire WHERE partenaire_id=%L`, id);
 const getPartnersFromName = (name: string) =>
   format(`SELECT * FROM partenaire WHERE partenaire_name LIKE '%s%%'`, name);
-const validateMail = (mail: string) => format(`SELECT partenaire_id FROM partenaire WHERE partenaire_mail=%L`, mail);
+const validateMail = (mail: string) =>
+  format(`SELECT partenaire_id FROM partenaire WHERE partenaire_mail=%L`, mail);
 
 const addPartner = (
   id: string,
@@ -21,9 +23,9 @@ const addPartner = (
     id,
     name,
     short_desc,
-    desc ? desc : null,
-    mail ? mail : null,
-    website ? website : null
+    desc != undefined ? desc : null,
+    mail != undefined ? mail : null,
+    website != undefined ? website : null
   );
 
 const updatePartner = (
@@ -38,9 +40,9 @@ const updatePartner = (
     `UPDATE partenaire SET partenaire_name=%L, partenaire_short_description=%L, partenaire_description=%L, partenaire_mail=%L, partenaire_website_url=%L WHERE partenaire_id=%L`,
     name,
     short_desc,
-    desc ? desc : null,
-    mail ? mail : null,
-    website ? website : null,
+    desc != undefined ? desc : null,
+    mail != undefined ? mail : null,
+    website != undefined ? website : null,
     partner
   );
 

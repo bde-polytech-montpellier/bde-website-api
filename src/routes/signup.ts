@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 
 import express from "express";
 import bcrypt from "bcryptjs";
-import {v4 as uuidv4} from "uuid"
+import { v4 as uuidv4 } from "uuid";
 
 import queries from "../queries/authenticationQueries";
 import { validatePasswd } from "../middlewares/users";
@@ -37,9 +37,14 @@ const hashPasswd = (req: Request, res: Response) => {
 
 const addUser = (req: Request, res: Response, hash: string) => {
   const { name, mail } = req.body;
-  pool.query(queries.createUser(uuidv4(), name, mail, hash), (err, results) => {
+  const uuid = uuidv4();
+  pool.query(queries.createUser(uuid, name, mail, hash), (err, results) => {
     if (err) return res.status(500).send(err);
-    else return res.status(200).json({ message: "Utilisateur créé avec succès !" });
+    else {
+      return res
+        .status(200)
+        .json({ message: "Utilisateur créé avec succès !" });
+    }
   });
 };
 

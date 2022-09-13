@@ -5,8 +5,8 @@ import cloudinary from "cloudinary";
 import rateLimit from "express-rate-limit";
 import express from "express";
 import cors from "cors";
-import dotenv from "dotenv"
-dotenv.config()
+import dotenv from "dotenv";
+dotenv.config();
 
 const app = express();
 const port =
@@ -17,7 +17,7 @@ const limiter = rateLimit({
   max: 100, // Limit each IP to 100 requests per `window`
   standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
   legacyHeaders: false, // Disable the `X-RateLimit-*` headers
-})
+});
 bodyParser.urlencoded({
   extended: true,
 });
