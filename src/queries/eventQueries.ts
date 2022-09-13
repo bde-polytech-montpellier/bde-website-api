@@ -1,26 +1,26 @@
 import format from "pg-format";
 
 const listEveryEvents = () =>
-  `SELECT event_id, event_name, event_short_description, event_description, event_pic, event_date, event_time, event_place, event_datetime, event_price, event_club_id, club_name FROM event LEFT JOIN club ON event_club_id = club_id ORDER BY event_name`;
+  `SELECT event_id, event_name, event_short_description, event_description, event_pic, event_date, event_time, event_place, event_datetime, event_price, event_price_follower, event_club_id, club_name FROM event LEFT JOIN club ON event_club_id = club_id ORDER BY event_name`;
 const listEveryEventsAfter = (date: Date) =>
   format(
-    `SELECT event_id, event_name, event_short_description, event_description, event_date, event_time, event_place, event_datetime, event_price, event_club_id, club_name FROM event LEFT JOIN club ON event_club_id = club_id WHERE event_date > %L`,
+    `SELECT event_id, event_name, event_short_description, event_description, event_date, event_time, event_place, event_datetime, event_price, event_price_follower, event_club_id, club_name FROM event LEFT JOIN club ON event_club_id = club_id WHERE event_date > %L`,
     date
   );
 const listEveryEventsBefore = (date: Date) =>
   format(
-    `SELECT event_id, event_name, event_short_description, event_description, event_date, event_time, event_place, event_datetime, event_price, event_club_id, club_name FROM event LEFT JOIN club ON event_club_id = club_id WHERE event_date < %L`,
+    `SELECT event_id, event_name, event_short_description, event_description, event_date, event_time, event_place, event_datetime, event_price, event_price_follower, event_club_id, club_name FROM event LEFT JOIN club ON event_club_id = club_id WHERE event_date < %L`,
     date
   );
 
 const getEvent = (id: string) =>
   format(
-    `SELECT event_id, event_name, event_short_description, event_description, event_date, event_time, event_place, event_datetime, event_price, event_club_id, club_name FROM event LEFT JOIN club ON event_club_id = club_id WHERE event_id=%L`,
+    `SELECT event_id, event_name, event_short_description, event_description, event_date, event_time, event_place, event_datetime, event_price, event_price_follower, event_club_id, club_name FROM event LEFT JOIN club ON event_club_id = club_id WHERE event_id=%L`,
     id
   );
 const getEventsFromName = (name: string) =>
   format(
-    `SELECT event_id, event_name, event_short_description, event_description, event_date, event_time, event_place, event_datetime, event_price, event_club_id, club_name FROM event LEFT JOIN club ON event_club_id = club_id WHERE event_name LIKE '%s%%'`,
+    `SELECT event_id, event_name, event_short_description, event_description, event_date, event_time, event_place, event_datetime, event_price, event_price_follower, event_club_id, club_name FROM event LEFT JOIN club ON event_club_id = club_id WHERE event_name LIKE '%s%%'`,
     name
   );
 
@@ -34,10 +34,11 @@ const addEvent = (
   place?: string,
   datetime?: string,
   price?: number,
+  follower_price?: number,
   club?: string
 ) =>
   format(
-    `INSERT INTO event (event_id, event_name, event_short_description, event_description, event_date, event_time, event_place, event_datetime, event_price, event_club_id) VALUES (%L, %L, %L, %L, %L, %L, %L, %L, %L, %L) RETURNING event_id`,
+    `INSERT INTO event (event_id, event_name, event_short_description, event_description, event_date, event_time, event_place, event_datetime, event_price, event_price_follower, event_club_id) VALUES (%L, %L, %L, %L, %L, %L, %L, %L, %L, %L, %L) RETURNING event_id`,
     id,
     name,
     short_desc,
@@ -47,6 +48,7 @@ const addEvent = (
     place != undefined ? place : null,
     datetime != undefined ? datetime : null,
     price != undefined ? price : null,
+    follower_price != undefined ? follower_price : null,
     club != undefined ? club : null
   );
 
@@ -61,10 +63,11 @@ const updateEvent = (
   place?: string,
   datetime?: string,
   price?: number,
+  follower_price?: number,
   club?: string
 ) =>
   format(
-    `UPDATE event SET event_name=%L, event_short_description=%L, event_description=%L, event_date=%L, event_time=%L, event_place=%L, event_datetime=%L, event_price=%L, event_club_id=%L WHERE event_id=%L`,
+    `UPDATE event SET event_name=%L, event_short_description=%L, event_description=%L, event_date=%L, event_time=%L, event_place=%L, event_datetime=%L, event_price=%L, event_price_follower=%L, event_club_id=%L WHERE event_id=%L`,
     name,
     short_desc,
     desc != undefined ? desc : null,
@@ -73,6 +76,7 @@ const updateEvent = (
     place != undefined ? place : null,
     datetime != undefined ? datetime : null,
     price != undefined ? price : null,
+    follower_price != undefined ? follower_price : null,
     club != undefined ? club : null,
     event
   );

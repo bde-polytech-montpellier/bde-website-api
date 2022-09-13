@@ -71,6 +71,7 @@ function registerEvent(
     fields.place ? (fields.place as string) : undefined,
     fields.datetime ? (fields.datetime as string) : undefined,
     fields.price ? Number(fields.price as string) : undefined,
+    fields.follower_price ? Number(fields.follower_price as string) : undefined,
     fields.club_id ? (fields.club_id as string) : undefined
   );
   pool.query(query, async (err, result) => {
@@ -118,6 +119,7 @@ async function updateEvent(
     fields.place ? (fields.place as string) : undefined,
     fields.datetime ? (fields.datetime as string) : undefined,
     fields.price ? Number(fields.price as string) : undefined,
+    fields.follower_price ? Number(fields.follower_price as string) : undefined,
     fields.club_id ? (fields.club_id as string) : undefined
   );
 
