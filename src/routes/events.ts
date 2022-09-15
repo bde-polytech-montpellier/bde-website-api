@@ -75,6 +75,9 @@ function registerEvent(
     fields.club_id ? (fields.club_id as string) : undefined
   );
   pool.query(query, async (err, result) => {
+    if (err)
+      return res.status(500).json({ message: "Could not register event" });
+
     if (file && (fields.imgChanged as string) === "true") {
       await uploadImage(file.filepath, res, (url: any) => {
         pool.query(
@@ -88,9 +91,8 @@ function registerEvent(
         );
       });
     }
-    if (err)
-      return res.status(500).json({ message: "Could not register event" });
-    else return res.status(200).json({ message: "Event added" });
+
+    return res.status(200).json({ message: "Event added" });
   });
 }
 

@@ -42,7 +42,6 @@ CREATE TABLE partenaire (
   partenaire_website_url varchar(255)
 );
 
-
 CREATE TABLE club (
   club_id uuid PRIMARY KEY,
   club_name varchar(255) NOT NULL,
@@ -52,7 +51,6 @@ CREATE TABLE club (
   club_fb text,
   club_ig text
 );
-
 
 CREATE TABLE event (
   event_id uuid PRIMARY KEY,
@@ -68,10 +66,8 @@ CREATE TABLE event (
   event_club_id uuid REFERENCES club (club_id)
 );
 
-
 -- INSERT INTO partenaire (partenaire_name, partenaire_pic, partenaire_short_description, partenaire_description, partenaire_mail, partenaire_website_url)
 --   VALUES ('Partenaire1', 'https://aws.random.cat/meow', 'kitty', 'kity cat', 'cat@kitty.com', 'www.kittycat.cat'), ('Partenaire2', 'https://aws.random.cat/meow', 'kitty2', 'kity cat2', 'cat2@kitty2.com', 'www.kittycat2.cat');
-
 -- CREATE TABLE code_promo (
 --   promo_id uuid DEFAULT gen_random_uuid () PRIMARY KEY,
 --   partenaire_id uuid NOT NULL REFERENCES partenaire (partenaire_id) ON DELETE CASCADE,
@@ -80,3 +76,11 @@ CREATE TABLE event (
 -- );
 -- INSERT INTO club (club_name, club_pic, club_short_description, club_description, club_fb, club_ig)
 --   VALUES ('cluby', 'https://aws.random.cat/meow', 'mmm', 'meow', 'fb/meow', 'ig/meow'), ('cluba', 'https://aws.random.cat/meow', 'www', 'waf', 'fb/waf', 'ig/waf');
+CREATE TABLE goodie (
+  goodie_id uuid PRIMARY KEY,
+  goodie_name varchar(255) NOT NULL,
+  goodie_pic text,
+  goodie_description text,
+  goodie_price float CHECK (goodie_price >= 0)
+);
+

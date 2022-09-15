@@ -15,7 +15,8 @@ export const validateToken = (
   if (tokenHeader) {
     const token = tokenHeader.split(" ")[1];
     jwt.verify(token, tokenKey, (err, data) => {
-      if (err) return res.status(401).json({ message: "Ta session est invalide !" });
+      if (err)
+        return res.status(401).json({ message: "Ta session est invalide !" });
       else return next(data);
     });
   } else {
@@ -33,7 +34,8 @@ export const validateAdmin = (
       if (err) return res.status(500).send(err);
 
       if (results.rows[0].polyuser_role === 1) next(data);
-      else return res.status(418).json({ message: "Tu n'es pas une théière !" });
+      else
+        return res.status(418).json({ message: "Tu n'es pas une théière !" });
     });
   });
 };
@@ -48,8 +50,9 @@ export const validatePermissions = (
     pool.query(userQueries.getRoleForUser(data.id), (err, results) => {
       if (err) return res.status(500).send(err);
 
-      if (results.rows[0].polyuser_role === 1 || data.uuid == uuid) next(data);
-      else return res.status(418).json({ message: "Tu n'es pas une théière !" });
-    })
+      if (data.uuid == uuid) next(data);
+      else
+        return res.status(418).json({ message: "Tu n'es pas une théière !" });
+    });
   });
 };

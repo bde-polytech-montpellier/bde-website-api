@@ -5,7 +5,7 @@ import queries from "../queries/partnershipQueries";
 import express, { Request, Response } from "express";
 import { validateAdmin } from "../middlewares/validateToken";
 import { checkMail } from "../middlewares/partners";
-import {v4 as uuidv4} from "uuid"
+import { v4 as uuidv4 } from "uuid";
 
 const router = express.Router();
 const form = formidable({ multiples: true });
@@ -34,7 +34,8 @@ router
   .route("/:id")
   .get((req, res) => {
     pool.query(queries.getPartner(req.params.id), (err, results) => {
-      if (err) return res.status(500).json({ message: "Could not get partner" });
+      if (err)
+        return res.status(500).json({ message: "Could not get partner" });
       else return res.status(200).json(results.rows);
     });
   })
@@ -50,7 +51,9 @@ router
     });
   })
   .delete((req, res) => {
-    validateAdmin(req.headers.authorization, res, () => deletePartner(req, res));
+    validateAdmin(req.headers.authorization, res, () =>
+      deletePartner(req, res)
+    );
   });
 
 router.route("/name/:name").get((req, res) => {
@@ -75,6 +78,9 @@ function registerPartner(
     fields.website ? (fields.website as string) : undefined
   );
   pool.query(query, async (err, result) => {
+    if (err)
+      return res.status(500).json({ message: "Could not register partner" });
+
     if (file && (fields.imgChanged as string) === "true") {
       await uploadImage(file.filepath, res, (url: any) => {
         pool.query(
@@ -88,9 +94,7 @@ function registerPartner(
         );
       });
     }
-    if (err)
-      return res.status(500).json({ message: "Could not register partner" });
-    else return res.status(200).json({ message: "Partner added" });
+    return res.status(200).json({ message: "Partner added" });
   });
 }
 
@@ -118,7 +122,8 @@ async function updatePartner(
     fields.website ? (fields.website as string) : undefined
   );
   pool.query(query, (err) => {
-    if (err) return res.status(500).json({ message: "Could not update partner" });
+    if (err)
+      return res.status(500).json({ message: "Could not update partner" });
     else return res.status(200).json({ message: "Partner updated" });
   });
 }
@@ -126,7 +131,8 @@ async function updatePartner(
 function deletePartner(req: Request, res: Response) {
   const query = queries.deletePartner(req.params.id);
   pool.query(query, (err) => {
-    if (err) return res.status(500).json({ message: "Could not delete partner" });
+    if (err)
+      return res.status(500).json({ message: "Could not delete partner" });
     else return res.status(200).json({ message: "Partner deleted" });
   });
 }
