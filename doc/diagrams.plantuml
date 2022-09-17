@@ -22,13 +22,13 @@ class Event {
 }
 
 class Partnenaire {
-  + partenaire_id: UUID
-  + partenaire_name: String
-  + partenaire_short_description: String
-  + partenaire_description: String
-  + partenaire_pic: String
-  + partenaire_mail: String
-  + partenaire_website_url: String
+  + partner_id: UUID
+  + partner_name: String
+  + partner_short_description: String
+  + partner_description: String
+  + partner_pic: String
+  + partner_mail: String
+  + partner_website: String
 }
 
 class Club {

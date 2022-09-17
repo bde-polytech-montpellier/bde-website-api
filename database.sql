@@ -32,14 +32,14 @@ CREATE TABLE polyuser (
 INSERT INTO polyuser (polyuser_id, polyuser_name, polyuser_role, polyuser_mail, polyuser_password)
   VALUES ('ea99489b-df58-4241-a30f-3d20a70a7d4c', 'Lucas Nouguier', 1, 'lucas.nouguier@protonmail.com', '$2a$10$DNf13uxFJ7GHgdtzWMpt6.xF4YU04Te1.VZ1Z4pbDPbgOLECBV8vW');
 
-CREATE TABLE partenaire (
-  partenaire_id uuid PRIMARY KEY,
-  partenaire_name varchar(255) NOT NULL,
-  partenaire_pic text,
-  partenaire_short_description varchar(500) NOT NULL,
-  partenaire_description text,
-  partenaire_mail varchar(255) UNIQUE,
-  partenaire_website_url varchar(255)
+CREATE TABLE partner (
+  partner_id uuid PRIMARY KEY,
+  partner_name varchar(255) NOT NULL,
+  partner_pic text,
+  partner_short_description varchar(500) NOT NULL,
+  partner_description text,
+  partner_mail varchar(255) UNIQUE,
+  partner_website varchar(255)
 );
 
 CREATE TABLE club (
@@ -66,11 +66,11 @@ CREATE TABLE event (
   event_club_id uuid REFERENCES club (club_id)
 );
 
--- INSERT INTO partenaire (partenaire_name, partenaire_pic, partenaire_short_description, partenaire_description, partenaire_mail, partenaire_website_url)
---   VALUES ('Partenaire1', 'https://aws.random.cat/meow', 'kitty', 'kity cat', 'cat@kitty.com', 'www.kittycat.cat'), ('Partenaire2', 'https://aws.random.cat/meow', 'kitty2', 'kity cat2', 'cat2@kitty2.com', 'www.kittycat2.cat');
+-- INSERT INTO partner (partner_name, partner_pic, partner_short_description, partner_description, partner_mail, partner_website)
+--   VALUES ('partner1', 'https://aws.random.cat/meow', 'kitty', 'kity cat', 'cat@kitty.com', 'www.kittycat.cat'), ('partner2', 'https://aws.random.cat/meow', 'kitty2', 'kity cat2', 'cat2@kitty2.com', 'www.kittycat2.cat');
 -- CREATE TABLE code_promo (
 --   promo_id uuid DEFAULT gen_random_uuid () PRIMARY KEY,
---   partenaire_id uuid NOT NULL REFERENCES partenaire (partenaire_id) ON DELETE CASCADE,
+--   partner_id uuid NOT NULL REFERENCES partner (partner_id) ON DELETE CASCADE,
 --   promo_name varchar(255) NOT NULL,
 --   promo_description text NOT NULL
 -- );

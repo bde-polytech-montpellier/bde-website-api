@@ -84,7 +84,7 @@ function registerPartner(
     if (file && (fields.imgChanged as string) === "true") {
       await uploadImage(file.filepath, res, (url: any) => {
         pool.query(
-          queries.setImg(url.secure_url, result.rows[0].partenaire_id),
+          queries.setImg(url.secure_url, result.rows[0].partner_id),
           (err) => {
             if (err)
               return res

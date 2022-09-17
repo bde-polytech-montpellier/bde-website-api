@@ -28,7 +28,12 @@ cloudinary.v2.config({
   api_secret: process.env.API_SECRET!,
 });
 
-app.use(cors({ origin: config.client, optionsSuccessStatus: 204 }));
+app.use(
+  cors({
+    origin: process.env.ENV == "DEV" ? "*" : config.client,
+    optionsSuccessStatus: 204,
+  })
+); // TO VERIFY
 app.use(bodyParser.json());
 app.use("/api", router);
 app.use("/api", limiter);
