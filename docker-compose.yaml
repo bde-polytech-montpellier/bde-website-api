@@ -1,0 +1,20 @@
+version: "3"
+
+services:
+  db:
+    image: bitnami/postgresql:11
+    restart: unless-stopped
+    ports:
+      - '5432:5432'
+    volumes:
+      - './database.sql:/docker-entrypoint-initdb.d/database.sql'
+    environment:
+      - POSTGRESQL_DATABASE=postgres
+      - POSTGRESQL_USERNAME=postgres
+      - POSTGRES_PASSWORD=secret
+
+  cloudinary:
+    image: romajs/cloudinary-mock
+    restart: unless-stopped
+    ports:
+      - '9443:9443'
