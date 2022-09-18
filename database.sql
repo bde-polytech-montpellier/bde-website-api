@@ -1,9 +1,3 @@
-\c postgres
-DROP DATABASE bde;
-
-CREATE DATABASE bde;
-
-\c bde
 -- A faire seulement si on peut placer les vidéos
 -- CREATE TABLE image_defi (
 --   image_id uuid DEFAULT gen_random_uuid () PRIMARY KEY,
