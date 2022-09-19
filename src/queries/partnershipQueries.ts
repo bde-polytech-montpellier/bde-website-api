@@ -7,7 +7,10 @@ const getPartner = (id: string) =>
 const getPartnersFromName = (name: string) =>
   format(`SELECT * FROM partner WHERE partner_name LIKE '%s%%'`, name);
 const validateMail = (mail: string) =>
-  format(`SELECT partner_id FROM partner WHERE partner_mail=%L`, mail);
+  format(
+    `SELECT partner_id, partner_mail FROM partner WHERE partner_mail=%L`,
+    mail,
+  );
 
 const addPartner = (
   id: string,
@@ -15,7 +18,7 @@ const addPartner = (
   short_desc: string,
   desc?: string,
   mail?: string,
-  website?: string
+  website?: string,
 ) =>
   format(
     `INSERT INTO partner (partner_id, partner_name, partner_short_description, partner_description, partner_mail, partner_website) VALUES (%L, %L, %L, %L, %L, %L) RETURNING partner_id`,
@@ -24,7 +27,7 @@ const addPartner = (
     short_desc,
     desc != undefined ? desc : null,
     mail != undefined ? mail : null,
-    website != undefined ? website : null
+    website != undefined ? website : null,
   );
 
 const updatePartner = (
@@ -33,7 +36,7 @@ const updatePartner = (
   short_desc: string,
   desc?: string,
   mail?: string,
-  website?: string
+  website?: string,
 ) =>
   format(
     `UPDATE partner SET partner_name=%L, partner_short_description=%L, partner_description=%L, partner_mail=%L, partner_website=%L WHERE partner_id=%L`,
@@ -42,7 +45,7 @@ const updatePartner = (
     desc != undefined ? desc : null,
     mail != undefined ? mail : null,
     website != undefined ? website : null,
-    partner
+    partner,
   );
 
 const setImg = (img: string, id: string) =>

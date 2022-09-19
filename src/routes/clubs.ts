@@ -48,7 +48,7 @@ router
 function registerClub(
   fields: formidable.Fields,
   file: formidable.File,
-  res: Response
+  res: Response,
 ) {
   const query = queries.addClub(
     uuidv4(),
@@ -56,7 +56,7 @@ function registerClub(
     fields.short_description as string,
     fields.description ? (fields.description as string) : undefined,
     fields.fb ? (fields.fb as string) : undefined,
-    fields.ig ? (fields.ig as string) : undefined
+    fields.ig ? (fields.ig as string) : undefined,
   );
   pool.query(query, async (err, result) => {
     if (err)
@@ -71,7 +71,7 @@ function registerClub(
               return res
                 .status(500)
                 .json({ message: "Could not upload image" });
-          }
+          },
         );
       });
     }
@@ -84,7 +84,7 @@ async function updateClub(
   club: string,
   fields: formidable.Fields,
   file: formidable.File,
-  res: Response
+  res: Response,
 ) {
   if (file && (fields.imgChanged as string) === "true") {
     await uploadImage(file.filepath, res, (url: any) => {
@@ -100,7 +100,7 @@ async function updateClub(
     fields.short_description as string,
     fields.description ? (fields.description as string) : undefined,
     fields.fb ? (fields.fb as string) : undefined,
-    fields.ig ? (fields.ig as string) : undefined
+    fields.ig ? (fields.ig as string) : undefined,
   );
   pool.query(query, (err) => {
     if (err) return res.status(500).json({ message: "Could not update club" });
