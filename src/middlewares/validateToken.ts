@@ -10,7 +10,7 @@ const tokenKey = process.env.JWT_SECRET!;
 export const validateToken = (
   tokenHeader: string | undefined,
   res: Response,
-  next: Function
+  next: Function,
 ) => {
   if (tokenHeader) {
     const token = tokenHeader.split(" ")[1];
@@ -27,7 +27,7 @@ export const validateToken = (
 export const validateAdmin = (
   tokenHeader: string | undefined,
   res: Response,
-  next: Function
+  next: Function,
 ) => {
   validateToken(tokenHeader, res, (data: any) => {
     pool.query(userQueries.getRoleForUser(data.id), (err, results) => {
@@ -44,15 +44,10 @@ export const validatePermissions = (
   tokenHeader: string | undefined,
   uuid: string,
   res: Response,
-  next: Function
+  next: Function,
 ) => {
   validateToken(tokenHeader, res, (data: any) => {
-    pool.query(userQueries.getRoleForUser(data.id), (err, results) => {
-      if (err) return res.status(500).send(err);
-
-      if (data.uuid == uuid) next(data);
-      else
-        return res.status(418).json({ message: "Tu n'es pas une théière !" });
-    });
+    if (data.id == uuid) next(data);
+    else return res.status(418).json({ message: "Tu n'es pas une théière !" });
   });
 };
